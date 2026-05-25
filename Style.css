@@ -21,8 +21,8 @@
 .pan-hcy{
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
-  height: 240px;
-  width: 120px;
+  height: 360px;
+  width:260px;
 }
 .t-hcy-m{
     
@@ -31,9 +31,71 @@
     align-items: center;
     color: gray;
 }
-.t-defalut{
+.t-hcy-mt{
+    display: flex;
+    justify-content:center;
+    padding-top: 3px;
+    align-items: flex-start;
+    color: gray;
+}
+
+.t-def{
 color: black;
 }
+.btn-def{
+    color: rgba(0, 0, 0, 0.8);
+    opacity: 0.7;
+    border-radius: 20px;
+    height: 40px;
+    width: 120px;
+    backdrop-filter: blur(12px);
+}
+
+.inp-def{
+    color: rgba(0, 0, 0, 0.8);
+    opacity: 0.7;
+    border-radius: 20px;
+    height: 40px;
+    width: 120px;
+    backdrop-filter: blur(12px);
+}
+.pan-def{
+  color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  height: 360px;
+  width:260px;
+}
+.t-def-m{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.8);
+}
+.t-def-mt{
+    display: flex;
+    justify-content:center;
+    padding-top: 3px;
+    align-items: flex-start;
+    color: rgba(0, 0, 0, 0.8);
+}
 .b-def{
-    border:4px solid  rgba(0, 0, 0, 0.821);
+    border: 3px solid rgba(0, 0, 0, 0.8);
+}
+.b-def-sd{
+    border: 3px solid rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 8px black;
+}
+
+.t-luv{
+color:rgb(160, 45, 64) ;
+}
+
+
+
+.sd-def{
+    box-shadow: 0 0 8px black;
+}
+.sd-angle{
+      box-shadow: 0 0 8px white;
 }
