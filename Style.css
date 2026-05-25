@@ -1,0 +1,39 @@
+.t-hcy{
+    
+    color: gray;
+}
+.btn-hcy{
+    background-color: rgba(255, 255, 255,0.8);
+    opacity: 0.7;
+    border-radius: 20px;
+    height: 40px;
+    width: 120px;
+    backdrop-filter: blur(12px);
+}
+.inp-hcy{
+    background-color: rgba(255, 255, 255,0.8);
+    opacity: 0.7;
+    border-radius: 20px;
+    height: 40px;
+    width: 120px;
+    backdrop-filter: blur(12px);
+}
+.pan-hcy{
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  height: 240px;
+  width: 120px;
+}
+.t-hcy-m{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+.t-defalut{
+color: black;
+}
+.b-def{
+    border:4px solid  rgba(0, 0, 0, 0.821);
+}
