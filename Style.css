@@ -1,115 +1,239 @@
-.btn{
-    opacity: 0.7;
-    border-radius: 20px;
-    height: 40px;
-    width: 120px;
-    
+/* =========================================================
+   TsukuyomiUI · Style.css
+   原子化纯 CSS 工具类库（改进版）
+   - 保留原有类名以兼容现有页面
+   - 新增：基础 reset、交互态、过渡、弹性尺寸、语义别名
+   ========================================================= */
+
+:root {
+    /* ---- 语义化主色（推荐使用别名，见文件底部）---- */
+    --hcy: gray;            /* 次要 / 灰 */
+    --def: black;           /* 默认 / 黑 */
+    --luv: #ff4444;         /* 主色 / 危险（红）*/
+    --kgy: gold;            /* 警告（金）*/
+    --irh: deepskyblue;     /* 信息（蓝）*/
+    --skr: #ffb7c5;         /* 樱花 sakura（樱花粉）—— 原与 irh 重复，已修正 */
+    --stn: darkgreen;       /* 成功（绿）*/
+
+    /* ---- 半透明 / 毛玻璃 ---- */
+    --glass: rgba(255, 255, 255, 0.8);   /* hcy 背景、边框用的半透明白 */
+    --fg-bg: rgba(255, 255, 255, 0.2);   /* 毛玻璃背景 */
+    --tp-bg: rgba(255, 255, 255, 0.5);   /* 半透明背景 */
+    --angle: white;                       /* 高亮阴影色 */
+
+    /* ---- 设计令牌（便于统一调整）---- */
+    --radius: 20px;
+    --radius-pill: 90px;
+    --transition: 0.2s ease;
 }
-.bot{
-   margin-top: auto;
-   margin-bottom: 6px;
+
+/* =========================================================
+   基础 reset：避免固定宽高 + padding/border 撑破元素
+   ========================================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
-.inp{
-    opacity: 0.7;
-    border-radius: 20px;
-    height: 40px;
-    width: 120px;
-    
+
+/* =========================================================
+   组件
+   ========================================================= */
+.btn {
+    opacity: 0.85;
+    border-radius: var(--radius);
+    min-height: 40px;
+    min-width: 120px;
+    padding: 0 18px;
+    cursor: pointer;
+    transition: opacity var(--transition), transform var(--transition),
+        box-shadow var(--transition);
 }
-.nav{
+.btn:hover {
+    opacity: 1;
+}
+.btn:active {
+    transform: scale(0.96);
+}
+.btn:focus-visible {
+    outline: 2px solid var(--irh);
+    outline-offset: 2px;
+}
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.bot {
+    margin-top: auto;
+    margin-bottom: 6px;
+}
+
+.inp {
+    opacity: 0.85;
+    border-radius: var(--radius);
+    min-height: 40px;
+    min-width: 120px;
+    padding: 0 14px;
+    transition: opacity var(--transition), box-shadow var(--transition);
+}
+.inp:hover {
+    opacity: 1;
+}
+.inp:focus {
+    opacity: 1;
+    outline: none;
+    box-shadow: 0 0 8px var(--irh);
+}
+
+.nav {
     width: 100%;
-    overflow: hid;
+    overflow: hidden;
 }
-.nav-fix{
-      position: fixed;  
-       border-radius: 90px;
+
+.nav-fix {
+    position: fixed;
+    border-radius: var(--radius-pill);
     height: 70px;
     width: 480px;
-    top: 5%;         
-    left: 50%;        
+    max-width: 92vw;        /* 小屏自适应，避免溢出 */
+    top: 5%;
+    left: 50%;
     transform: translate(-50%, -50%);
-      z-index: 999;
-    
-}
-.pan{
-    border-radius: 20px;
-    height: 360px;
-    width:260px;
-}
-.fix {
-    position: fixed;  
-    top: 3%;         
-    left: 50%;        
-    transform:translate(-50%, -50%);
     z-index: 999;
 }
 
+.pan {
+    border-radius: var(--radius);
+    min-height: 360px;      /* 由固定改为最小，内容超出可自动撑高 */
+    width: 260px;
+    max-width: 92vw;
+    padding: 12px;
+}
 
-.m{
-    
+.card {
+    height: 50px;
+    width: 50px;
+}
+
+.fix {
+    position: fixed;
+    top: 3%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+/* =========================================================
+   布局助手
+   ========================================================= */
+.m {
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
-.mgn{
-margin: 6px 6px;
+.mgn {
+    margin: 6px 6px;
 }
 
-.fxc{
+.fxc {
     display: flex;
     flex-direction: column;
-      height: 100%;
+    height: 100%;
 }
-.fxcc{
+
+.fxcc {
     align-items: center;
 }
 
+/* =========================================================
+   颜色工具类
+   命名规则：t-(文字) / bg-(背景) / bd-(边框) / sd-(阴影)
+   ========================================================= */
 
-.t-hcy{
-    
-    color: gray;
-}
-.bg-hcy{
-    background-color: rgba(255, 255, 255,0.8);
-}
-.bd-hcy{
-    border: 3px solid  rgba(255, 255, 255,0.8);
+/* hcy —— 灰 / 半透明白 */
+.t-hcy  { color: var(--hcy); }
+.bg-hcy { background-color: var(--glass); }   /* 沿用半透明白背景 */
+.bd-hcy { border: 3px solid var(--glass); }
+.sd-hcy { box-shadow: 0 0 8px var(--hcy); }
+
+/* def —— 黑 */
+.t-def  { color: var(--def); }
+.bg-def { background-color: var(--def); }
+.bd-def { border: 3px solid var(--def); }
+.sd-def { box-shadow: 0 0 8px var(--def); }
+
+/* luv —— 主色（红）*/
+.t-luv  { color: var(--luv); }
+.bg-luv { background-color: var(--luv); }
+.bd-luv { border: 3px solid var(--luv); }
+.sd-luv { box-shadow: 0 0 8px var(--luv); }
+
+/* kgy —— 警告（金）*/
+.t-kgy  { color: var(--kgy); }
+.bg-kgy { background-color: var(--kgy); }
+.bd-kgy { border: 3px solid var(--kgy); }
+.sd-kgy { box-shadow: 0 0 8px var(--kgy); }
+
+/* irh —— 信息（蓝）*/
+.t-irh  { color: var(--irh); }
+.bg-irh { background-color: var(--irh); }
+.bd-irh { border: 3px solid var(--irh); }
+.sd-irh { box-shadow: 0 0 8px var(--irh); }
+
+/* skr —— 樱花粉 */
+.t-skr  { color: var(--skr); }
+.bg-skr { background-color: var(--skr); }
+.bd-skr { border: 3px solid var(--skr); }
+.sd-skr { box-shadow: 0 0 8px var(--skr); }
+
+/* stn —— 成功（绿）*/
+.t-stn  { color: var(--stn); }
+.bg-stn { background-color: var(--stn); }
+.bd-stn { border: 3px solid var(--stn); }
+.sd-stn { box-shadow: 0 0 8px var(--stn); }
+
+/* =========================================================
+   质感效果
+   ========================================================= */
+.fg {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    background-color: var(--fg-bg);
 }
 
-.t-def{
-color: black;
-}
-.bg-def{
-    background-color: rgba(0, 0, 0, 1);
-}
-.bd-def{
-    border: 3px solid rgba(0, 0, 0, 1);
-}
-.sd-def{
-    box-shadow: 0 0 8px black;
-}
-.t-luv{
-    color:  #ff4444;
-}
-.bg-luv{
-      background-color:  #ff4444;
-}
-.bd-luv{
-     border: 3px solid #ff4444;
-}
-.sd-luv{
-    box-shadow: 0 0 8px  #ff4444;
-}
-.fg{
-     backdrop-filter: blur(12px);
-  background-color: rgba(255,255,255,0.2);
-}
-.tp{
-    background-color: rgba(255, 255, 255, 0.5);
+.tp {
+    background-color: var(--tp-bg);
 }
 
-.sd-angle{
-      box-shadow: 0 0 8px white;
+.sd-angle {
+    box-shadow: 0 0 8px var(--angle);
 }
+
+/* =========================================================
+   语义化别名（推荐新代码使用，可读性更好）
+   旧的缩写类名继续可用，二者等价。
+   ========================================================= */
+.t-secondary { color: var(--hcy); }
+.t-default   { color: var(--def); }
+.t-primary,  .t-danger  { color: var(--luv); }
+.t-warning   { color: var(--kgy); }
+.t-info      { color: var(--irh); }
+.t-sakura    { color: var(--skr); }
+.t-success   { color: var(--stn); }
+
+.bg-default  { background-color: var(--def); }
+.bg-primary, .bg-danger { background-color: var(--luv); }
+.bg-warning  { background-color: var(--kgy); }
+.bg-info     { background-color: var(--irh); }
+.bg-sakura   { background-color: var(--skr); }
+.bg-success  { background-color: var(--stn); }
+
+/* =========================================================
+   尺寸修饰（按钮 / 输入框）
+   ========================================================= */
+.btn-sm, .inp-sm { min-height: 32px; min-width: 88px; padding: 0 12px; }
+.btn-lg, .inp-lg { min-height: 48px; min-width: 160px; padding: 0 24px; }
+.w-full { width: 100%; }
