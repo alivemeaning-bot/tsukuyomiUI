@@ -1,44 +1,46 @@
-/* =========================================================
-   TsukuyomiUI · Style.css
-   原子化纯 CSS 工具类库（改进版）
-   - 保留原有类名以兼容现有页面
-   - 新增：基础 reset、交互态、过渡、弹性尺寸、语义别名
-   ========================================================= */
+/* TsukuyomiUI - Style.css */
 
 :root {
-    /* ---- 语义化主色（推荐使用别名，见文件底部）---- */
-    --hcy: gray;            /* 次要 / 灰 */
-    --def: black;           /* 默认 / 黑 */
-    --luv: #ff4444;         /* 主色 / 危险（红）*/
-    --kgy: gold;            /* 警告（金）*/
-    --irh: deepskyblue;     /* 信息（蓝）*/
-    --skr: #ffb7c5;         /* 樱花 sakura（樱花粉）—— 原与 irh 重复，已修正 */
-    --stn: darkgreen;       /* 成功（绿）*/
+    /* 主色 */
+    --c-secondary: gray;
+    --c-default: black;
+    --c-primary: #ff4444;
+    --c-warning: gold;
+    --c-info: deepskyblue;
+    --c-sakura: #ffb7c5;
+    --c-success: darkgreen;
 
-    /* ---- 半透明 / 毛玻璃 ---- */
-    --glass: rgba(255, 255, 255, 0.8);   /* hcy 背景、边框用的半透明白 */
-    --fg-bg: rgba(255, 255, 255, 0.2);   /* 毛玻璃背景 */
-    --tp-bg: rgba(255, 255, 255, 0.5);   /* 半透明背景 */
-    --angle: white;                       /* 高亮阴影色 */
+    /* 半透明 */
+    --glass: rgba(255, 255, 255, 0.8);
+    --fg-bg: rgba(255, 255, 255, 0.2);
+    --tp-bg: rgba(255, 255, 255, 0.5);
+    --angle: white;
 
-    /* ---- 设计令牌（便于统一调整）---- */
+    /* 设计令牌 */
     --radius: 20px;
     --radius-pill: 90px;
+    --border-width: 3px;
+    --shadow-blur: 8px;
     --transition: 0.2s ease;
+    --pad:12px;
 }
 
-/* =========================================================
-   基础 reset：避免固定宽高 + padding/border 撑破元素
-   ========================================================= */
+/* reset */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-/* =========================================================
-   组件
-   ========================================================= */
+body {
+    margin: 0;
+}
+
+.full {
+    min-height: 100vh;
+}
+
+/* 按钮 */
 .btn {
     opacity: 0.85;
     border-radius: var(--radius);
@@ -56,7 +58,7 @@
     transform: scale(0.96);
 }
 .btn:focus-visible {
-    outline: 2px solid var(--irh);
+    outline: 2px solid var(--c-info);
     outline-offset: 2px;
 }
 .btn:disabled {
@@ -65,11 +67,26 @@
     transform: none;
 }
 
+/* 尺寸变体 */
+.btn-sm,
+.inp-sm {
+    min-height: 32px;
+    min-width: 88px;
+    padding: 0 12px;
+}
+.btn-lg,
+.inp-lg {
+    min-height: 48px;
+    min-width: 160px;
+    padding: 0 24px;
+}
+
 .bot {
     margin-top: auto;
     margin-bottom: 6px;
 }
 
+/* 输入框 */
 .inp {
     opacity: 0.85;
     border-radius: var(--radius);
@@ -84,38 +101,62 @@
 .inp:focus {
     opacity: 1;
     outline: none;
-    box-shadow: 0 0 8px var(--irh);
+    box-shadow: 0 0 8px var(--c-info);
 }
 
+/* 导航 */
 .nav {
     width: 100%;
     overflow: hidden;
 }
-
 .nav-fix {
     position: fixed;
     border-radius: var(--radius-pill);
     height: 70px;
     width: 480px;
-    max-width: 92vw;        /* 小屏自适应，避免溢出 */
+    max-width: 92vw;
     top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
 }
+.nav-side {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px 12px;
+    border-radius: var(--radius);
+    z-index: 999;
+}
 
+/* 面板 / 卡片 */
 .pan {
     border-radius: var(--radius);
-    min-height: 360px;      /* 由固定改为最小，内容超出可自动撑高 */
+    min-height: 360px;
     width: 260px;
     max-width: 92vw;
     padding: 12px;
 }
-
-.card {
-    height: 50px;
-    width: 50px;
+.card-r {
+    box-sizing: content-box;
+    width: var(--w, 200px);
+    height: var(--h, 200px);
+    border-radius: var(--radius);
+    padding: var(--pad, 12px);
 }
+.card-s {
+    box-sizing: content-box;
+    width: var(--w, 200px);
+    height: var(--h, 200px);
+    padding: var(--pad, 12px);
+}
+
 
 .fix {
     position: fixed;
@@ -125,115 +166,94 @@
     z-index: 999;
 }
 
-/* =========================================================
-   布局助手
-   ========================================================= */
-.m {
-    display: flex;
+/* 布局：九宫格对齐 */
+.f { display: flex; }
+
+.f-tl { justify-content: flex-start;  align-items: flex-start; }
+.f-tc { justify-content: center;      align-items: flex-start; }
+.f-tr { justify-content: flex-end;    align-items: flex-start; }
+
+.f-ml { justify-content: flex-start;  align-items: center; }
+.f-mc { justify-content: center;      align-items: center; }
+.f-mr { justify-content: flex-end;    align-items: center; }
+
+.f-bl { justify-content: flex-start;  align-items: flex-end; }
+.f-bc { justify-content: center;      align-items: flex-end; }
+.f-br { justify-content: flex-end;    align-items: flex-end; }
+
+/* 布局：多排居中网格 */
+.g {
+    display: grid;
+    gap: var(--gap, 12px);
     justify-content: center;
+    justify-items: center;
+    align-content: center;
     align-items: center;
 }
+.g-2 { grid-template-columns: repeat(2, auto); }
+.g-3 { grid-template-columns: repeat(3, auto); }
 
-.mgn {
-    margin: 6px 6px;
-}
+/* 主题：文字 */
+.t-ycy  { color: var(--c-secondary); }
+.t-def  { color: var(--c-default); }
+.t-luv  { color: var(--c-primary); }
+.t-kgy  { color: var(--c-warning); }
+.t-irh  { color: var(--c-info); }
+.t-skr  { color: var(--c-sakura); }
+.t-stn  { color: var(--c-success); }
+.t-white { color: #fff; }
+.t-black { color: #000; }
 
-.fxc {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+/* 主题：背景 */
+.bg-ycy { background-color: var(--c-secondary); }
+.bg-def { background-color: var(--c-default); }
+.bg-luv { background-color: var(--c-primary); }
+.bg-kgy { background-color: var(--c-warning); }
+.bg-irh { background-color: var(--c-info); }
+.bg-skr { background-color: var(--c-sakura); }
+.bg-stn { background-color: var(--c-success); }
+.bg-glass { background-color: var(--glass); }
+.bg-fg    { background-color: var(--fg-bg); }
+.bg-tp    { background-color: var(--tp-bg); }
+.bg-white { background-color: #fff; }
+.bg-black { background-color: #000; }
 
-.fxcc {
-    align-items: center;
-}
+/* 主题：边框 */
+.bd-ycy { border: var(--border-width) solid var(--c-secondary); }
+.bd-def { border: var(--border-width) solid var(--c-default); }
+.bd-luv { border: var(--border-width) solid var(--c-primary); }
+.bd-kgy { border: var(--border-width) solid var(--c-warning); }
+.bd-irh { border: var(--border-width) solid var(--c-info); }
+.bd-skr { border: var(--border-width) solid var(--c-sakura); }
+.bd-stn { border: var(--border-width) solid var(--c-success); }
+.bd-glass { border: var(--border-width) solid var(--glass); }
+.bd-white { border: var(--border-width) solid #fff; }
+.bd-black { border: var(--border-width) solid #000; }
+.bd-angle { border: var(--border-width) solid var(--angle); }
 
-/* =========================================================
-   颜色工具类
-   命名规则：t-(文字) / bg-(背景) / bd-(边框) / sd-(阴影)
-   ========================================================= */
+/* 主题：阴影 */
+.sd-ycy { box-shadow: 0 0 var(--shadow-blur) var(--c-secondary); }
+.sd-def { box-shadow: 0 0 var(--shadow-blur) var(--c-default); }
+.sd-luv { box-shadow: 0 0 var(--shadow-blur) var(--c-primary); }
+.sd-kgy { box-shadow: 0 0 var(--shadow-blur) var(--c-warning); }
+.sd-irh { box-shadow: 0 0 var(--shadow-blur) var(--c-info); }
+.sd-skr { box-shadow: 0 0 var(--shadow-blur) var(--c-sakura); }
+.sd-stn { box-shadow: 0 0 var(--shadow-blur) var(--c-success); }
+.sd-white { box-shadow: 0 0 var(--shadow-blur) #fff; }
+.sd-black { box-shadow: 0 0 var(--shadow-blur) #000; }
+.sd-glass { box-shadow: 0 0 var(--shadow-blur) var(--glass); }
+.sd-angle { box-shadow: 0 0 var(--shadow-blur) var(--angle); }
 
-/* hcy —— 灰 / 半透明白 */
-.t-hcy  { color: var(--hcy); }
-.bg-hcy { background-color: var(--glass); }   /* 沿用半透明白背景 */
-.bd-hcy { border: 3px solid var(--glass); }
-.sd-hcy { box-shadow: 0 0 8px var(--hcy); }
-
-/* def —— 黑 */
-.t-def  { color: var(--def); }
-.bg-def { background-color: var(--def); }
-.bd-def { border: 3px solid var(--def); }
-.sd-def { box-shadow: 0 0 8px var(--def); }
-
-/* luv —— 主色（红）*/
-.t-luv  { color: var(--luv); }
-.bg-luv { background-color: var(--luv); }
-.bd-luv { border: 3px solid var(--luv); }
-.sd-luv { box-shadow: 0 0 8px var(--luv); }
-
-/* kgy —— 警告（金）*/
-.t-kgy  { color: var(--kgy); }
-.bg-kgy { background-color: var(--kgy); }
-.bd-kgy { border: 3px solid var(--kgy); }
-.sd-kgy { box-shadow: 0 0 8px var(--kgy); }
-
-/* irh —— 信息（蓝）*/
-.t-irh  { color: var(--irh); }
-.bg-irh { background-color: var(--irh); }
-.bd-irh { border: 3px solid var(--irh); }
-.sd-irh { box-shadow: 0 0 8px var(--irh); }
-
-/* skr —— 樱花粉 */
-.t-skr  { color: var(--skr); }
-.bg-skr { background-color: var(--skr); }
-.bd-skr { border: 3px solid var(--skr); }
-.sd-skr { box-shadow: 0 0 8px var(--skr); }
-
-/* stn —— 成功（绿）*/
-.t-stn  { color: var(--stn); }
-.bg-stn { background-color: var(--stn); }
-.bd-stn { border: 3px solid var(--stn); }
-.sd-stn { box-shadow: 0 0 8px var(--stn); }
-
-/* =========================================================
-   质感效果
-   ========================================================= */
+/* 质感 */
 .fg {
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    background-color: var(--fg-bg);
+    -webkit-backdrop-filter: blur(var(--shadow-blur));
+    backdrop-filter: blur(var(--shadow-blur));
+    background:linear-gradient(#fff2,transparent);
+    border:1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:0 25px 25px rgba(0, 0, 0, 0.25);
 }
-
 .tp {
+    -webkit-backdrop-filter: blur(var(--shadow-blur));
+    backdrop-filter: blur(var(--shadow-blur));
     background-color: var(--tp-bg);
 }
-
-.sd-angle {
-    box-shadow: 0 0 8px var(--angle);
-}
-
-/* =========================================================
-   语义化别名（推荐新代码使用，可读性更好）
-   旧的缩写类名继续可用，二者等价。
-   ========================================================= */
-.t-secondary { color: var(--hcy); }
-.t-default   { color: var(--def); }
-.t-primary,  .t-danger  { color: var(--luv); }
-.t-warning   { color: var(--kgy); }
-.t-info      { color: var(--irh); }
-.t-sakura    { color: var(--skr); }
-.t-success   { color: var(--stn); }
-
-.bg-default  { background-color: var(--def); }
-.bg-primary, .bg-danger { background-color: var(--luv); }
-.bg-warning  { background-color: var(--kgy); }
-.bg-info     { background-color: var(--irh); }
-.bg-sakura   { background-color: var(--skr); }
-.bg-success  { background-color: var(--stn); }
-
-/* =========================================================
-   尺寸修饰（按钮 / 输入框）
-   ========================================================= */
-.btn-sm, .inp-sm { min-height: 32px; min-width: 88px; padding: 0 12px; }
-.btn-lg, .inp-lg { min-height: 48px; min-width: 160px; padding: 0 24px; }
-.w-full { width: 100%; }
